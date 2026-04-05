@@ -1,0 +1,11 @@
+* text=auto eol=lf
+
+*.sln text eol=lf
+*.slnx text eol=lf
+# Resources/Graphics
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.webp binary

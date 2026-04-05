@@ -2,6 +2,7 @@ import { useNavigate } from 'react-router-dom';
 import type { Player } from '../../../shared/types/player';
 import { positionColors } from '../helpers/playersHelpers';
 import {LazyImage} from "../../../shared/components/images/LazyImage.tsx";
+import getCorrectPath from "../../../shared/helpers/images/getCorrectPath.ts";
 
 interface FifaCardProps {
 	player: Player;
@@ -75,7 +76,7 @@ export function FifaCard({ player }: FifaCardProps) {
 						>
 							{player.photoUrl ? (
 								<LazyImage
-									src={player.photoUrl}
+									src={getCorrectPath(player.photoUrl)}
 									alt={`Zdjęcie ${player.firstName} ${player.lastName}`}
 									style={{ width: '100%', height: '100%', objectFit: 'cover' }}
 								/>

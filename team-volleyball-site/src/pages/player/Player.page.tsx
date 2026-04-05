@@ -2,6 +2,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
 import findPlayerBySlug from "../../shared/helpers/players/findPlayerBySlug.ts";
 import {LazyImage} from "../../shared/components/images/LazyImage.tsx";
+import getCorrectPath from "../../shared/helpers/images/getCorrectPath.ts";
 
 const positionColors: Record<string, string> = {
 	'Rozgrywający': '#4f8ef7',
@@ -145,7 +146,7 @@ export default function PlayerPage() {
 						>
 							{player.photoUrl ? (
 								<LazyImage
-									src={player.photoUrl}
+									src={getCorrectPath(player.photoUrl)}
 									alt={`Zdjęcie ${player.firstName} ${player.lastName}`}
 									style={{ width: '100%', height: '100%', objectFit: 'cover' }}
 								/>

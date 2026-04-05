@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import type { Player } from '../../../shared/types/player';
 import {LazyImage} from "../../../shared/components/images/LazyImage.tsx";
+import getCorrectPath from "../../../shared/helpers/images/getCorrectPath.ts";
 
 const positionColors: Record<Player['position'], string> = {
 	'Rozgrywający': '#4f8ef7',
@@ -77,7 +78,7 @@ export function PlayerCard({ player }: PlayerCardProps) {
 					>
 						{player.photoUrl ? (
 							<LazyImage
-								src={player.photoUrl}
+								src={getCorrectPath(player.photoUrl)}
 								alt={`${player.firstName} ${player.lastName}`}
 								style={{ width: '100%', height: '100%', objectFit: 'cover' }}
 							/>
