@@ -6,8 +6,16 @@ export default function GalleryPage() {
 	const yearGroups = groupEventsByYearAndMonth(galleryEvents);
 
 	return (
-		<div style={{ maxWidth: '1024px', margin: '0 auto', padding: '48px 16px' }}>
-			{/* H1 */}
+		<div
+			style={{
+				maxWidth: '1024px',
+				margin: '0 auto',
+				padding: '48px 16px',
+				overflowX: 'hidden',
+				boxSizing: 'border-box',
+				width: '100%',
+			}}
+		>
 			<div style={{ marginBottom: '48px' }}>
 				<span
 					style={{
@@ -20,9 +28,10 @@ export default function GalleryPage() {
 				>
 					Wspomnienia
 				</span>
+				{/* H1 */}
 				<h1
 					style={{
-						fontSize: '36px',
+						fontSize: 'clamp(24px, 5vw, 36px)',
 						fontWeight: 800,
 						color: 'var(--text-primary)',
 						margin: '4px 0 8px',

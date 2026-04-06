@@ -1,53 +1,57 @@
 import { useState } from 'react';
 import type { GalleryPhoto } from '../../types/galleryTypes';
-import { resolvePhotoPath, getPhotoFilename } from '../../helpers/galleryHelpers';
+import {downloadPhotosAsZip, type ZipProgress} from "../../../../shared/helpers/files/downloadZip.ts";
 
 interface DownloadAllButtonProps {
 	photos: GalleryPhoto[];
+	eventSlug: string;
 	eventName: string;
 }
 
-export function DownloadAllButton({ photos, eventName }: DownloadAllButtonProps) {
-	const [isDownloading, setIsDownloading] = useState(false);
-	const [progress, setProgress]           = useState(0);
+const phaseLabel: Record<ZipProgress['phase'], string> = {
+	downloading: 'Pobieranie…',
+	zipping:     'Pakowanie ZIP…',
+	done:        'Gotowe!',
+	error:       'Błąd',
+};
 
-	const handleDownloadAll = async () => {
-		if (isDownloading) return;
-		setIsDownloading(true);
-		setProgress(0);
+export function DownloadAllButton({ photos, eventSlug, eventName }: DownloadAllButtonProps) {
+	const [progress, setProgress] = useState<ZipProgress | null>(null);
+	const isWorking = progress !== null && progress.phase !== 'done' && progress.phase !== 'error';
 
-		for (let i = 0; i < photos.length; i++) {
-			const photo = photos[i]!;
-			try {
-				const response = await fetch(resolvePhotoPath(photo.path));
-				const blob     = await response.blob();
-				const url      = URL.createObjectURL(blob);
-				const a        = document.createElement('a');
-				a.href         = url;
-				a.download     = getPhotoFilename(photo.path);
-				document.body.appendChild(a);
-				a.click();
-				document.body.removeChild(a);
-				URL.revokeObjectURL(url);
-			} catch {
-				console.warn(`Nie udało się pobrać: ${photo.path}`);
-			}
-			setProgress(i + 1);
-			await new Promise((res) => setTimeout(res, 150));
+	const handleDownload = async () => {
+		if (isWorking) return;
+		setProgress({ downloaded: 0, total: photos.length, phase: 'downloading' });
+
+		try {
+			await downloadPhotosAsZip(photos, eventSlug, setProgress);
+		} catch {
+			setProgress({ downloaded: 0, total: photos.length, phase: 'error' });
+		} finally {
+			// Wyczyść stan po 2s
+			setTimeout(() => setProgress(null), 2000);
 		}
+	};
 
-		setIsDownloading(false);
-		setProgress(0);
+	const label = () => {
+		if (!progress) return `⬇ Pobierz wszystkie jako ZIP (${photos.length})`;
+
+		if (progress.phase === 'downloading') {
+			return `${phaseLabel.downloading} ${progress.downloaded}/${progress.total}`;
+		}
+		if (progress.phase === 'zipping') return phaseLabel.zipping;
+		if (progress.phase === 'done')    return '✓ Pobrano!';
+		return '✕ Błąd pobierania';
 	};
 
 	return (
 		<button
-			onClick={handleDownloadAll}
-			disabled={isDownloading}
-			title={`Pobierz wszystkie zdjęcia z: ${eventName}`}
+			onClick={handleDownload}
+			disabled={isWorking}
+			title={`Pobierz wszystkie zdjęcia z: ${eventName} jako plik ZIP`}
 			style={{
 				all: 'unset',
-				cursor: isDownloading ? 'default' : 'pointer',
+				cursor: isWorking ? 'default' : 'pointer',
 				display: 'inline-flex',
 				alignItems: 'center',
 				gap: '8px',
@@ -55,28 +59,49 @@ export function DownloadAllButton({ photos, eventName }: DownloadAllButtonProps)
 				borderRadius: '10px',
 				fontSize: '13px',
 				fontWeight: 600,
-				background: 'var(--accent-dim)',
-				border: '1px solid var(--accent)',
-				color: 'var(--accent)',
-				transition: 'background 0.15s',
-				opacity: isDownloading ? 0.7 : 1,
+				background: progress?.phase === 'done'   ? 'rgba(79,247,160,0.15)' :
+					progress?.phase === 'error'  ? 'rgba(247,95,79,0.15)'  :
+						'var(--accent-dim)',
+				border: `1px solid ${
+					progress?.phase === 'done'  ? '#4ff7a0' :
+						progress?.phase === 'error' ? '#f75f4f' :
+							'var(--accent)'
+				}`,
+				color: progress?.phase === 'done'   ? '#4ff7a0' :
+					progress?.phase === 'error'  ? '#f75f4f' :
+						'var(--accent)',
+				opacity: isWorking ? 0.85 : 1,
+				transition: 'background 0.15s, color 0.15s',
+				minWidth: '220px',
+				justifyContent: 'center',
 			}}
 			onMouseEnter={(e) => {
-				if (!isDownloading)
+				if (!isWorking) {
 					(e.currentTarget as HTMLElement).style.background = 'var(--accent)';
-				if (!isDownloading)
 					(e.currentTarget as HTMLElement).style.color = '#fff';
+				}
 			}}
 			onMouseLeave={(e) => {
 				(e.currentTarget as HTMLElement).style.background = 'var(--accent-dim)';
 				(e.currentTarget as HTMLElement).style.color = 'var(--accent)';
 			}}
 		>
-			{isDownloading ? (
-				<>⬇ Pobieranie… {progress}/{photos.length}</>
-			) : (
-				<>⬇ Pobierz wszystkie ({photos.length})</>
+			{/* Progress bar strip */}
+			{isWorking && progress.phase === 'downloading' && (
+				<span
+					style={{
+						position: 'absolute',
+						bottom: 0,
+						left: 0,
+						height: '2px',
+						background: 'var(--accent)',
+						width: `${(progress.downloaded / progress.total) * 100}%`,
+						borderRadius: '0 0 10px 10px',
+						transition: 'width 0.3s ease',
+					}}
+				/>
 			)}
+			{label()}
 		</button>
 	);
 }
