@@ -54,9 +54,9 @@ export const players: Player[] = [
 	},
 	{
 		id: 'player-4',
-		slug: 'dawid-górzyński-4',
+		slug: 'dawid-gurzyński-4',
 		firstName: 'Dawid',
-		lastName: 'Górzyński',
+		lastName: 'Gurzyński',
 		number: 4,
 		position: 'Uniwersalny',
 		height: 197,
