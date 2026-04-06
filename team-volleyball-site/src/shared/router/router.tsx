@@ -2,12 +2,13 @@ import { HashRouter, Route, Routes } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import { Layout } from '../components/layout/Layout';
 
-const HomePage     = lazy(() => import('../../pages/home/Home.page'));
-const PlayersPage  = lazy(() => import('../../pages/players/Players.page'));
-const PlayerPage   = lazy(() => import('../../pages/player/Player.page'));
-const SchedulePage = lazy(() => import('../../pages/schedule/Schedule.page'));
-const GalleryPage  = lazy(() => import('../../pages/gallery/Gallery.page'));
-const ContactPage  = lazy(() => import('../../pages/contact/Contact.page'));
+const HomePage          = lazy(() => import('../../pages/home/Home.page'));
+const PlayersPage       = lazy(() => import('../../pages/players/Players.page'));
+const PlayerPage        = lazy(() => import('../../pages/player/Player.page'));
+const SchedulePage      = lazy(() => import('../../pages/schedule/Schedule.page'));
+const GalleryPage       = lazy(() => import('../../pages/gallery/Gallery.page'));
+const EventGalleryPage  = lazy(() => import('../../pages/gallery/event/EventGallery.page'));
+const ContactPage       = lazy(() => import('../../pages/contact/Contact.page'));
 
 function PageLoader() {
 	return (
@@ -38,7 +39,8 @@ export function AppRouter() {
 						<Route path="zawodnicy"   element={<PlayersPage />} />
 						<Route path="zawodnik/:slug" element={<PlayerPage />} />
 						<Route path="terminarz"   element={<SchedulePage />} />
-						<Route path="galeria"     element={<GalleryPage />} />
+						<Route path="galeria"     element={<GalleryPage/>} />
+						<Route path="galeria/:slug"    element={<EventGalleryPage/>} />
 						<Route path="kontakt"     element={<ContactPage />} />
 						{/* Fallback */}
 						<Route path="*"           element={<HomePage />} />
