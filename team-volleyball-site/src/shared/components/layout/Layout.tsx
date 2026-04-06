@@ -1,13 +1,16 @@
 import { Outlet } from 'react-router-dom';
 import { Header } from './Header';
 import { Footer } from './Footer';
+import { PageTransition } from './PageTransition';
 
 export function Layout() {
 	return (
-		<div className="flex flex-col min-h-svh">
+		<div style={{ display: 'flex', flexDirection: 'column', minHeight: '100svh' }}>
 			<Header />
-			<main className="flex-1">
-				<Outlet />
+			<main style={{ flex: 1 }}>
+				<PageTransition>
+					<Outlet />
+				</PageTransition>
 			</main>
 			<Footer />
 		</div>

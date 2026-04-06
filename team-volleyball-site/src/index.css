@@ -1,26 +1,22 @@
 @import "tailwindcss";
 
 :root {
-    /* Paleta ciemna */
-    --bg-base:       #0f1117;   /* najciemniejsze tło strony */
-    --bg-surface:    #171b26;   /* karty, sekcje */
-    --bg-elevated:   #1e2435;   /* hover, aktywne elementy */
-    --bg-muted:      #252b3b;   /* subtelne wyróżnienie */
+    --bg-base:       #0f1117;
+    --bg-surface:    #171b26;
+    --bg-elevated:   #1e2435;
+    --bg-muted:      #252b3b;
 
     --border:        #2d3449;
     --border-muted:  #232838;
 
-    /* Akcent — intensywna niebiesko-fioletowa */
     --accent:        #4f8ef7;
     --accent-dim:    rgba(79, 142, 247, 0.15);
     --accent-hover:  #6ba3ff;
 
-    /* Tekst */
-    --text-primary:  #e8eaf0;   /* główny — jasny ale nie ostry biały */
-    --text-secondary:#9aa3b8;   /* opisy, meta */
-    --text-muted:    #5c6680;   /* placeholdery, disabled */
+    --text-primary:  #e8eaf0;
+    --text-secondary:#9aa3b8;
+    --text-muted:    #5c6680;
 
-    /* Gradienty nagłówkowe */
     --gradient-hero: linear-gradient(135deg, #1a2035 0%, #0f1117 60%, #141829 100%);
 
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
@@ -46,17 +42,19 @@ body {
     flex-direction: column;
 }
 
-/* Scrollbar — ciemna, subtelna */
-::-webkit-scrollbar {
-    width: 6px;
+@keyframes pageEnter {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
-::-webkit-scrollbar-track {
-    background: var(--bg-base);
-}
-::-webkit-scrollbar-thumb {
-    background: var(--bg-muted);
-    border-radius: 3px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: var(--accent-dim);
-}
+
+/* Scrollbar */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: var(--bg-base); }
+::-webkit-scrollbar-thumb  { background: var(--bg-muted); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-dim); }
