@@ -8,12 +8,11 @@ interface TimelineMonthProps {
 
 function TimelineMonth({ monthLabel, events }: TimelineMonthProps) {
 	return (
-		<div style={{ marginBottom: '32px' }}>
-			{/* Month label */}
+		<div style={{ marginBottom: '28px' }}>
 			<p
 				style={{
-					margin: '0 0 14px',
-					fontSize: '12px',
+					margin: '0 0 12px',
+					fontSize: '11px',
 					fontWeight: 600,
 					textTransform: 'uppercase',
 					letterSpacing: '0.1em',
@@ -23,12 +22,11 @@ function TimelineMonth({ monthLabel, events }: TimelineMonthProps) {
 				{monthLabel}
 			</p>
 
-			{/* Events grid for this month */}
 			<div
 				style={{
 					display: 'grid',
-					gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
-					gap: '14px',
+					gridTemplateColumns: 'repeat(auto-fill, minmax(min(100%, 280px), 1fr))',
+					gap: '12px',
 				}}
 			>
 				{events.map((event) => (
@@ -51,14 +49,22 @@ function TimelineYear({ yearGroup, isLast }: TimelineYearProps) {
 		<div
 			style={{
 				display: 'grid',
-				gridTemplateColumns: '80px 1fr',
-				gap: '0 32px',
+				gridTemplateColumns: 'clamp(48px, 10vw, 80px) 1fr',
+				gap: '0 16px',
 				position: 'relative',
+				minWidth: 0,
 			}}
 		>
 			{/* Left — year column */}
-			<div style={{ position: 'relative', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-				{/* Year badge */}
+			<div
+				style={{
+					position: 'relative',
+					display: 'flex',
+					flexDirection: 'column',
+					alignItems: 'center',
+				}}
+			>
+				{/* Year badge — sticky podczas scrollowania */}
 				<div
 					style={{
 						position: 'sticky',
@@ -67,22 +73,23 @@ function TimelineYear({ yearGroup, isLast }: TimelineYearProps) {
 						display: 'flex',
 						flexDirection: 'column',
 						alignItems: 'center',
-						gap: '8px',
+						gap: '6px',
 					}}
 				>
 					<div
 						style={{
-							width: '56px',
-							height: '56px',
+							width: 'clamp(40px, 8vw, 56px)',
+							height: 'clamp(40px, 8vw, 56px)',
 							borderRadius: '50%',
 							background: 'var(--accent-dim)',
 							border: '2px solid var(--accent)',
 							display: 'flex',
 							alignItems: 'center',
 							justifyContent: 'center',
-							fontSize: '13px',
+							fontSize: 'clamp(10px, 2vw, 13px)',
 							fontWeight: 800,
 							color: 'var(--accent)',
+							flexShrink: 0,
 						}}
 					>
 						{yearGroup.year}
@@ -90,32 +97,41 @@ function TimelineYear({ yearGroup, isLast }: TimelineYearProps) {
 
 					<span
 						style={{
-							fontSize: '10px',
+							fontSize: '9px',
 							color: 'var(--text-muted)',
 							textAlign: 'center',
+							lineHeight: 1.3,
 						}}
 					>
-						{totalEvents} {totalEvents === 1 ? 'wydarzenie' : 'wydarzeń'}
+						{totalEvents}{' '}
+						{totalEvents === 1 ? 'event' : 'eventów'}
 					</span>
 				</div>
 
-				{/* Vertical line */}
+				{/* Vertical connecting line */}
 				{!isLast && (
 					<div
 						style={{
 							position: 'absolute',
-							top: '64px',
+							top: 'clamp(44px, 9vw, 64px)',
 							bottom: 0,
 							width: '2px',
 							background: 'linear-gradient(to bottom, var(--accent), var(--border))',
-							opacity: 0.4,
+							opacity: 0.35,
 						}}
 					/>
 				)}
 			</div>
 
 			{/* Right — months + events */}
-			<div style={{ paddingTop: '8px', paddingBottom: isLast ? 0 : '48px' }}>
+			<div
+				style={{
+					paddingTop: '6px',
+					paddingBottom: isLast ? 0 : '40px',
+					minWidth: 0,
+					overflow: 'hidden',
+				}}
+			>
 				{yearGroup.months.map((monthGroup) => (
 					<TimelineMonth
 						key={monthGroup.month}
@@ -151,7 +167,7 @@ export function GalleryTimeline({ yearGroups }: GalleryTimelineProps) {
 	}
 
 	return (
-		<div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
+		<div style={{ display: 'flex', flexDirection: 'column', gap: 0, overflow: 'hidden' }}>
 			{yearGroups.map((yearGroup, idx) => (
 				<TimelineYear
 					key={yearGroup.year}

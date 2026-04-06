@@ -3,11 +3,12 @@ import { Link, NavLink } from 'react-router-dom';
 import { cn } from '../../lib/cn';
 
 const navLinks = [
-	{ path: '/',           label: 'Strona główna' },
-	{ path: '/zawodnicy',  label: 'Zawodnicy' },
-	{ path: '/terminarz',  label: 'Terminarz' },
-	{ path: '/galeria',    label: 'Galeria' },
-	{ path: '/kontakt',    label: 'Kontakt' },
+	{ path: '/',             label: 'Strona główna' },
+	{ path: '/zawodnicy',    label: 'Zawodnicy' },
+	{ path: '/terminarz',    label: 'Terminarz' },
+	{ path: '/osiagniecia',  label: 'Osiągnięcia' },
+	{ path: '/galeria',      label: 'Galeria' },
+	{ path: '/kontakt',      label: 'Kontakt' },
 ];
 
 export function Header() {
@@ -43,8 +44,8 @@ export function Header() {
 							letterSpacing: '-0.02em',
 						}}
 					>
-            Ekipa <span style={{ color: 'var(--accent)' }}>Po Robocie</span>
-          </span>
+						Ekipa <span style={{ color: 'var(--accent)' }}>Po Robocie</span>
+					</span>
 				</Link>
 
 				{/* Desktop nav */}
@@ -57,7 +58,7 @@ export function Header() {
 							style={{ cursor: 'pointer' }}
 							className={({ isActive }) =>
 								cn(
-									'px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200',
+									'px-3 py-2 rounded-lg text-sm font-medium transition-all duration-200',
 									isActive
 										? 'text-(--accent) bg-(--accent-dim)'
 										: 'text-(--text-secondary) hover:text-(--text-primary) hover:bg-(--bg-elevated)'
@@ -96,7 +97,7 @@ export function Header() {
 			<div
 				className={cn(
 					'md:hidden overflow-hidden transition-all duration-300',
-					menuOpen ? 'max-h-80' : 'max-h-0'
+					menuOpen ? 'max-h-96' : 'max-h-0'
 				)}
 				style={{ borderTop: menuOpen ? '1px solid var(--border)' : 'none' }}
 			>

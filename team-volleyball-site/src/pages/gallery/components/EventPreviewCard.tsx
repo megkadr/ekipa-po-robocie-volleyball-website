@@ -1,8 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import type { GalleryEvent } from '../types/galleryTypes';
 import { EventBadge } from './EventBadge';
-import { formatEventDate, resolvePhotoPath } from '../helpers/galleryHelpers';
+import { formatEventDate } from '../helpers/galleryHelpers';
 import {LazyImage} from "../../../shared/components/images/LazyImage.tsx";
+import getCorrectPath from "../../../shared/helpers/images/getCorrectPath.ts";
 
 interface EventPreviewCardProps {
 	event: GalleryEvent;
@@ -23,12 +24,13 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 				cursor: 'pointer',
 				display: 'block',
 				width: '100%',
+				boxSizing: 'border-box',
 				textAlign: 'left',
 			}}
 		>
 			<div
 				style={{
-					borderRadius: '16px',
+					borderRadius: '14px',
 					border: '1px solid var(--border)',
 					background: 'var(--bg-surface)',
 					overflow: 'hidden',
@@ -52,7 +54,7 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 							display: 'grid',
 							gridTemplateColumns: previewPhotos.length === 1 ? '1fr' : 'repeat(2, 1fr)',
 							gap: '2px',
-							height: '180px',
+							aspectRatio: previewPhotos.length === 1 ? '16 / 7' : '16 / 9',
 							overflow: 'hidden',
 						}}
 					>
@@ -63,12 +65,13 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 									position: 'relative',
 									overflow: 'hidden',
 									background: 'var(--bg-elevated)',
-									// Pierwsze zdjęcie zajmuje całą lewą kolumnę gdy jest więcej niż 1
-									gridRow: previewPhotos.length > 2 && idx === 0 ? 'span 2' : undefined,
+									gridRow:
+										previewPhotos.length > 2 && idx === 0 ? 'span 2' : undefined,
+									minHeight: 0,
 								}}
 							>
 								<LazyImage
-									src={resolvePhotoPath(photo.path)}
+									src={getCorrectPath(photo.path)}
 									alt={photo.caption ?? `Zdjęcie ${idx + 1} z ${event.name}`}
 									style={{
 										width: '100%',
@@ -100,10 +103,9 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 						))}
 					</div>
 				) : (
-					// Placeholder gdy brak zdjęć
 					<div
 						style={{
-							height: '120px',
+							aspectRatio: '16 / 6',
 							background: 'var(--bg-elevated)',
 							display: 'flex',
 							alignItems: 'center',
@@ -116,8 +118,16 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 				)}
 
 				{/* Event info */}
-				<div style={{ padding: '14px 16px' }}>
-					<div style={{ display: 'flex', alignItems: 'center', gap: '8px', marginBottom: '6px', flexWrap: 'wrap' }}>
+				<div style={{ padding: '12px 14px' }}>
+					<div
+						style={{
+							display: 'flex',
+							alignItems: 'center',
+							gap: '8px',
+							marginBottom: '5px',
+							flexWrap: 'wrap',
+						}}
+					>
 						<EventBadge type={event.type} />
 						<span style={{ fontSize: '11px', color: 'var(--text-muted)' }}>
 							{event.photos.length} zdjęć
@@ -127,10 +137,11 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 					<p
 						style={{
 							margin: 0,
-							fontSize: '15px',
+							fontSize: '14px',
 							fontWeight: 700,
 							color: 'var(--text-primary)',
 							lineHeight: 1.3,
+							overflowWrap: 'break-word',
 						}}
 					>
 						{event.name}
@@ -139,9 +150,9 @@ export function EventPreviewCard({ event }: EventPreviewCardProps) {
 					<div
 						style={{
 							display: 'flex',
-							alignItems: 'center',
-							gap: '12px',
-							marginTop: '6px',
+							flexWrap: 'wrap',
+							gap: '8px',
+							marginTop: '5px',
 						}}
 					>
 						<span style={{ fontSize: '12px', color: 'var(--text-secondary)' }}>
