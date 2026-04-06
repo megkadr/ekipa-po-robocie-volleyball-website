@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://megkadr.github.io/ekipa-po-robocie-volleyball-website/sitemap.xml
