@@ -54,10 +54,27 @@ export const scheduleEvents: ScheduleEvent[] = [
 			notes: 'Świetna atmosfera, trudna rywalizacja w fazie pucharowej.',
 		},
 	},
-
-	// TODO: Dodać kolejne wydarzenia
 	{
 		id: 'event-2',
+		slug: 'turniej-siatkowki-wiosna-volley-2026-2-edycja',
+		name: 'Turniej Siatkówki „Wiosna Volley” 2026 – II edycja',
+		type: 'turniej',
+		location: 'Iława',
+		startDate: '2026-04-19',
+		endDate: null,
+		description: 'II edycja turnieju Wiosna Volley',
+		gallerySlug: null, //'turniej-siatkowki-wiosna-volley-2026-04-19'
+		result: null,
+		documents: [
+			{
+				path: 'assets/docs/wiosna-volley-2026/Regulamin_Wiosna_Volley_2026.pdf',
+				label: 'Regulamin turnieju Wiosna Volley 2026',
+				hasRegistrationForm: true,
+			},
+		],
+	},
+	{
+		id: 'event-3',
 		slug: 'bals-biskupiec-2026',
 		name: 'Liga BALS Biskupiec',
 		type: 'liga',
