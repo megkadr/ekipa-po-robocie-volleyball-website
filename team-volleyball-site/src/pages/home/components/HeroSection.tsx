@@ -90,8 +90,8 @@ export function HeroSection() {
 					<div className="mt-8 flex flex-wrap justify-center gap-8">
 						{[
 							{ label: 'Zawodników', value: '10' },
-							{ label: 'Sezony', value: '0' },
-							{ label: 'Mecze', value: '0' },
+							{ label: 'Sezony', value: '1' },
+							{ label: 'Mecze', value: '5' },
 						].map((stat) => (
 							<div key={stat.label} className="flex flex-col items-center">
                 <span

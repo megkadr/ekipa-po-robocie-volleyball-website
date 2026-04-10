@@ -4,6 +4,7 @@ import { scheduleEvents } from './data/scheduleEvents';
 import { TypeBadge, StatusBadge } from './components/ScheduleBadges';
 import { TournamentResultSection } from './components/TournamentResultSection';
 import { LeagueResultSection } from './components/LeagueResultSection';
+import { EventDocumentsSection } from './components/EventDocumentsSection';
 import {
 	getEventStatus,
 	formatDateRange,
@@ -63,30 +64,19 @@ export default function EventDetailPage() {
 				}}
 			>
 				{/* Header */}
-				<div
-					style={{
-						padding: '24px 28px',
-						borderBottom: '1px solid var(--border)',
-						background: 'var(--bg-elevated)',
-					}}
-				>
+				<div style={{ padding: '24px 28px', borderBottom: '1px solid var(--border)', background: 'var(--bg-elevated)' }}>
 					<div style={{ display: 'flex', gap: '8px', marginBottom: '10px', flexWrap: 'wrap' }}>
 						<TypeBadge type={event.type} />
 						{status && <StatusBadge status={status} />}
 					</div>
 
-					{/* H1 */}
 					<h1 style={{ fontSize: '24px', fontWeight: 800, color: 'var(--text-primary)', margin: '0 0 10px', lineHeight: 1.3 }}>
 						{event.name}
 					</h1>
 
 					<div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
-						<span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>
-							📍 {event.location}
-						</span>
-						<span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>
-							📅 {formatDateRange(event.startDate, event.endDate)}
-						</span>
+						<span style={{ fontSize: '13px', color: 'var(--text-secondary)' }}>📍 {event.location}</span>
+						<span style={{ fontSize: '13px', color: 'var(--text-muted)' }}>📅 {formatDateRange(event.startDate, event.endDate)}</span>
 					</div>
 				</div>
 
@@ -101,13 +91,15 @@ export default function EventDetailPage() {
 						</p>
 					</section>
 
+					{/* Documents — shows only when event has documents[] */}
+					<EventDocumentsSection event={event} />
+
 					{/* Results */}
 					{event.result && (
 						<section>
 							<h2 style={{ fontSize: '11px', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: 'var(--accent)', margin: '0 0 16px' }}>
 								Wyniki
 							</h2>
-
 							{isTournamentResult(event.result) ? (
 								<TournamentResultSection result={event.result} />
 							) : (
@@ -118,17 +110,7 @@ export default function EventDetailPage() {
 
 					{/* No result yet */}
 					{!event.result && status !== 'finished' && (
-						<div
-							style={{
-								padding: '16px',
-								borderRadius: '10px',
-								background: 'var(--bg-elevated)',
-								border: '1px solid var(--border)',
-								textAlign: 'center',
-								color: 'var(--text-muted)',
-								fontSize: '14px',
-							}}
-						>
+						<div style={{ padding: '16px', borderRadius: '10px', background: 'var(--bg-elevated)', border: '1px solid var(--border)', textAlign: 'center', color: 'var(--text-muted)', fontSize: '14px' }}>
 							{status === 'ongoing'
 								? '🏐 Wydarzenie w toku — wyniki pojawią się po zakończeniu.'
 								: '📅 Wydarzenie jeszcze się nie odbyło.'}
@@ -143,21 +125,7 @@ export default function EventDetailPage() {
 							</h2>
 							<button
 								onClick={() => navigate(`/galeria/${event.gallerySlug}`)}
-								style={{
-									all: 'unset',
-									cursor: 'pointer',
-									display: 'inline-flex',
-									alignItems: 'center',
-									gap: '8px',
-									padding: '10px 18px',
-									borderRadius: '10px',
-									fontSize: '13px',
-									fontWeight: 600,
-									background: 'var(--bg-elevated)',
-									border: '1px solid var(--border)',
-									color: 'var(--text-primary)',
-									transition: 'border-color 0.15s',
-								}}
+								style={{ all: 'unset', cursor: 'pointer', display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '10px 18px', borderRadius: '10px', fontSize: '13px', fontWeight: 600, background: 'var(--bg-elevated)', border: '1px solid var(--border)', color: 'var(--text-primary)', transition: 'border-color 0.15s' }}
 								onMouseEnter={(e) => ((e.currentTarget as HTMLElement).style.borderColor = 'var(--accent)')}
 								onMouseLeave={(e) => ((e.currentTarget as HTMLElement).style.borderColor = 'var(--border)')}
 							>
