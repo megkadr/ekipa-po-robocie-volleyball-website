@@ -22,15 +22,25 @@
 
 ## 📸 Podgląd
 
-<img width="2558" height="1350" alt="Zrzut ekranu_20260411_231254" src="https://github.com/user-attachments/assets/e62b9101-8080-42b8-8496-9f2be5ad0a4e" />
+<p align="center">
+  <kbd><img width="1279" alt="Strona główna" src="https://github.com/user-attachments/assets/e62b9101-8080-42b8-8496-9f2be5ad0a4e" /></kbd>
+</p>
 
-<img width="2558" height="1350" alt="Zrzut ekranu_20260411_231304" src="https://github.com/user-attachments/assets/0364c745-e589-4693-8bac-a4b3011e291b" />
+<p align="center">
+  <kbd><img width="1279" alt="Zawodnicy" src="https://github.com/user-attachments/assets/0364c745-e589-4693-8bac-a4b3011e291b" /></kbd>
+</p>
 
-<img width="2558" height="1350" alt="Zrzut ekranu_20260411_231307" src="https://github.com/user-attachments/assets/b837a20d-57eb-4fed-85a0-bcf5bce001dd" />
+<p align="center">
+  <kbd><img width="1279" alt="Profil zawodnika" src="https://github.com/user-attachments/assets/b837a20d-57eb-4fed-85a0-bcf5bce001dd" /></kbd>
+</p>
 
-<img width="2558" height="1350" alt="Zrzut ekranu_20260411_231310" src="https://github.com/user-attachments/assets/e505c4b5-b099-4418-99b5-5c8064c446e7" />
+<p align="center">
+  <kbd><img width="1279" alt="Galeria" src="https://github.com/user-attachments/assets/e505c4b5-b099-4418-99b5-5c8064c446e7" /></kbd>
+</p>
 
-<img width="2558" height="1350" alt="Zrzut ekranu_20260411_231313" src="https://github.com/user-attachments/assets/20339a98-4a68-46c5-8928-82f04b8509b9" />
+<p align="center">
+  <kbd><img width="1279" alt="Terminarz" src="https://github.com/user-attachments/assets/20339a98-4a68-46c5-8928-82f04b8509b9" /></kbd>
+</p>
 
 ---
 
